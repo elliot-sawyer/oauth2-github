@@ -2,7 +2,7 @@
 
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
-class GithubResourceOwner implements ResourceOwnerInterface
+class TrademeResourceOwner implements ResourceOwnerInterface
 {
     use ArrayAccessorTrait;
 
@@ -12,6 +12,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
      * @var string
      */
     protected $domain;
+    
 
     /**
      * Raw response
@@ -37,7 +38,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-        return $this->getValueByKey($this->response, 'id');
+        return $this->getValueByKey($this->response, 'MemberId');
     }
 
     /**
@@ -47,7 +48,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
      */
     public function getEmail()
     {
-        return $this->getValueByKey($this->response, 'email');
+        return $this->getValueByKey($this->response, 'Email');
     }
 
     /**
@@ -57,7 +58,10 @@ class GithubResourceOwner implements ResourceOwnerInterface
      */
     public function getName()
     {
-        return $this->getValueByKey($this->response, 'name');
+        $first = trim($this->getValueByKey($this->response, 'FirstName'));
+        $last =  trim($this->getValueByKey($this->response, 'LastName'));
+
+        return $last ? ($first.' '.$last) : $first;
     }
 
     /**
@@ -67,7 +71,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
      */
     public function getNickname()
     {
-        return $this->getValueByKey($this->response, 'login');
+        return $this->getValueByKey($this->response, 'Nickname');
     }
 
     /**
@@ -77,8 +81,13 @@ class GithubResourceOwner implements ResourceOwnerInterface
      */
     public function getUrl()
     {
-        $urlParts = array_filter([$this->domain, $this->getNickname()]);
-
+        //https://www.trademe.co.nz/Members/Listings.aspx?member=123123123123
+        $urlParts = array_filter([
+            $this->domain,
+            '/Members/Listings.aspx?member='
+            $this->getId()
+        ]);
+        
         return count($urlParts) ? implode('/', $urlParts) : null;
     }
 

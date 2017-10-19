@@ -2,7 +2,7 @@
 
 use Mockery as m;
 
-class GithubResourceOwnerTest extends \PHPUnit_Framework_TestCase
+class TrademeResourceOwnerTest extends \PHPUnit_Framework_TestCase
 {
     public function testUrlIsNullWithoutDomainOrNickname()
     {

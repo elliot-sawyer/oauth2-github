@@ -1,10 +1,10 @@
-# Github Provider for OAuth 2.0 Client
-[![Latest Version](https://img.shields.io/github/release/thephpleague/oauth2-github.svg?style=flat-square)](https://github.com/thephpleague/oauth2-github/releases)
+# Trademe Provider for OAuth 2.0 Client
+[![Latest Version](https://img.shields.io/github/release/elliot-sawyer/oauth2-trademe.svg?style=flat-square)](https://github.com/elliot-sawyer/oauth2-trademe/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/thephpleague/oauth2-github/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/oauth2-github)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/oauth2-github.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/oauth2-github/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/oauth2-github.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/oauth2-github)
-[![Total Downloads](https://img.shields.io/packagist/dt/league/oauth2-github.svg?style=flat-square)](https://packagist.org/packages/league/oauth2-github)
+[![Build Status](https://img.shields.io/travis/elliot-sawyer/oauth2-trademe/master.svg?style=flat-square)](https://travis-ci.org/elliot-sawyer/oauth2-trademe)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/elliot-sawyer/oauth2-trademe.svg?style=flat-square)](https://scrutinizer-ci.com/g/elliot-sawyer/oauth2-trademe/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/elliot-sawyer/oauth2-trademe.svg?style=flat-square)](https://scrutinizer-ci.com/g/elliot-sawyer/oauth2-trademe)
+[![Total Downloads](https://img.shields.io/packagist/dt/league/oauth2-trademe.svg?style=flat-square)](https://packagist.org/packages/league/oauth2-trademe)
 
 This package provides Github OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
@@ -13,21 +13,24 @@ This package provides Github OAuth 2.0 support for the PHP League's [OAuth 2.0 C
 To install, use composer:
 
 ```
-composer require league/oauth2-github
+composer require league/oauth2-trademe
 ```
 
 ## Usage
 
-Usage is the same as The League's OAuth client, using `\League\OAuth2\Client\Provider\Github` as the provider.
+Usage is the same as The League's OAuth client, using `\League\OAuth2\Client\Provider\Trademe` as the provider.
 
 ### Authorization Code Flow
 
 ```php
-$provider = new League\OAuth2\Client\Provider\Github([
-    'clientId'          => '{github-client-id}',
-    'clientSecret'      => '{github-client-secret}',
+$provider = new League\OAuth2\Client\Provider\Trademe([
+    'clientId'          => '{trademe-client-id}',
+    'clientSecret'      => '{trademe-client-secret}',
     'redirectUri'       => 'https://example.com/callback-url',
+    'trademe_sandbox'   => true,
 ]);
+
+//@todo sample code: need to get request token before doing authorization request
 
 if (!isset($_GET['code'])) {
 
@@ -72,12 +75,12 @@ if (!isset($_GET['code'])) {
 
 ### Managing Scopes
 
-When creating your Github authorization URL, you can specify the state and scopes your application may authorize.
+When creating your Trademe authorization URL, you can specify the state and scopes your application may authorize.
 
 ```php
 $options = [
     'state' => 'OPTIONAL_CUSTOM_CONFIGURED_STATE',
-    'scope' => ['user','user:email','repo'] // array or string
+    'scope' => ['MyTradeMeRead','MyTradeMeWrite','BiddingAndBuying',] // array or string
 ];
 
 $authorizationUrl = $provider->getAuthorizationUrl($options);
@@ -86,26 +89,9 @@ If neither are defined, the provider will utilize internal defaults.
 
 At the time of authoring this documentation, the [following scopes are available](https://developer.github.com/v3/oauth/#scopes).
 
-- user
-- user:email
-- user:follow
-- public_repo
-- repo
-- repo_deployment
-- repo:status
-- delete_repo
-- notifications
-- gist
-- read:repo_hook
-- write:repo_hook
-- admin:repo_hook
-- admin:org_hook
-- read:org
-- write:org
-- admin:org
-- read:public_key
-- write:public_key
-- admin:public_key
+- MyTradeMeRead
+- MyTradeMeWrite
+- BiddingAndBuyinguser
 
 ## Testing
 
@@ -115,15 +101,15 @@ $ ./vendor/bin/phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/oauth2-github/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/elliot-sawyer/oauth2-trademe/blob/master/CONTRIBUTING.md) for details.
 
 
 ## Credits
 
-- [Steven Maguire](https://github.com/stevenmaguire)
-- [All Contributors](https://github.com/thephpleague/oauth2-github/contributors)
+- [Steven Maguire](https://github.com/stevenmaguire) - this provider is derived from his Github provider.
+- [All Contributors](https://github.com/elliot-sawyer/oauth2-trademe/contributors)
 
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/thephpleague/oauth2-github/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/elliot-sawyer/oauth2-trademe/blob/master/LICENSE) for more information.

@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/thephpleague/oauth2-github).
+We accept contributions via Pull Requests on [Github](https://github.com/elliot-sawyer/oauth2-trademe).
 
 
 ## Pull Requests

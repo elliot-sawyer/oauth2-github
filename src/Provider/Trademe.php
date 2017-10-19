@@ -2,12 +2,12 @@
 
 namespace League\OAuth2\Client\Provider;
 
-use League\OAuth2\Client\Provider\Exception\GithubIdentityProviderException;
+use League\OAuth2\Client\Provider\Exception\TrademeIdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
-class Github extends AbstractProvider
+class Trademe extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
@@ -16,15 +16,26 @@ class Github extends AbstractProvider
      *
      * @var string
      */
-    public $domain = 'https://github.com';
+    public $livedomain = 'https://secure.trademe.co.nz';
+    public $testdomain = 'https://secure.tmsandbox.co.nz'
 
     /**
      * Api domain
      *
      * @var string
      */
-    public $apiDomain = 'https://api.github.com';
+    public $apiLiveDomain = 'https://api.trademe.co.nz';
+    public $apiTestDomain = 'https://api.tmsandbox.co.nz';
+    
+    public function domain()
+    {
+        return $this->trademeSandbox === true ? $this->testdomain : $this->livedomain;
+    }
 
+    public function apiDomain()
+    {
+        return $this->trademeSandbox === true ? $this->apiTestDomain : $this->apiLiveDomain;   
+    }
     /**
      * Get authorization url to begin OAuth flow
      *
@@ -32,7 +43,7 @@ class Github extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return $this->domain.'/login/oauth/authorize';
+        return $this->domain().'/Oauth/Authorize';
     }
 
     /**
@@ -44,7 +55,7 @@ class Github extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return $this->domain.'/login/oauth/access_token';
+        return $this->domain().'/Oauth/AccessToken';
     }
 
     /**
@@ -56,10 +67,7 @@ class Github extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        if ($this->domain === 'https://github.com') {
-            return $this->apiDomain.'/user';
-        }
-        return $this->domain.'/api/v3/user';
+        return $this->apiDomain().'/v1/MyTradeMe/Summary.json';
     }
 
     /**
@@ -72,14 +80,13 @@ class Github extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return [];
+        return ['MyTradeMeRead'];
     }
 
     /**
      * Check a provider response for errors.
      *
-     * @link   https://developer.github.com/v3/#client-errors
-     * @link   https://developer.github.com/v3/oauth/#common-errors-for-the-access-token-request
+     * @todo replace Github with Trademe
      * @throws IdentityProviderException
      * @param  ResponseInterface $response
      * @param  array $data Parsed response data
@@ -88,9 +95,9 @@ class Github extends AbstractProvider
     protected function checkResponse(ResponseInterface $response, $data)
     {
         if ($response->getStatusCode() >= 400) {
-            throw GithubIdentityProviderException::clientException($response, $data);
+            throw TrademeIdentityProviderException::clientException($response, $data);
         } elseif (isset($data['error'])) {
-            throw GithubIdentityProviderException::oauthException($response, $data);
+            throw TrademeIdentityProviderException::oauthException($response, $data);
         }
     }
 
@@ -103,8 +110,8 @@ class Github extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        $user = new GithubResourceOwner($response);
+        $user = new TrademeResourceOwner($response);
 
-        return $user->setDomain($this->domain);
+        return $user->setDomain($this->domain());
     }
 }

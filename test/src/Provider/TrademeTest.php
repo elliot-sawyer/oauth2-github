@@ -3,7 +3,7 @@
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
 use Mockery as m;
 
-class GithubTest extends \PHPUnit_Framework_TestCase
+class TrademeTest extends \PHPUnit_Framework_TestCase
 {
     use QueryBuilderTrait;
 
@@ -11,7 +11,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->provider = new \League\OAuth2\Client\Provider\Github([
+        $this->provider = new \League\OAuth2\Client\Provider\Trademe([
             'clientId' => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri' => 'none',
