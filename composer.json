@@ -1,12 +1,11 @@
 {
-    "name": "league/oauth2-github",
-    "description": "Github OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+    "name": "elliot-sawyer/oauth2-trademe",
+    "description": "Trademe OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
     "license": "MIT",
     "authors": [
         {
-            "name": "Steven Maguire",
-            "email": "stevenmaguire@gmail.com",
-            "homepage": "https://github.com/stevenmaguire"
+            "name": "elliot sawyer",
+            "homepage": "https://github.com/elliot-sawyer"
         }
     ],
     "keywords": [
@@ -15,7 +14,7 @@
         "client",
         "authorization",
         "authorisation",
-        "github"
+        "trademe"
     ],
     "require": {
         "league/oauth2-client": "^2.0"
