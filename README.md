@@ -13,7 +13,7 @@ This package provides Github OAuth 2.0 support for the PHP League's [OAuth 2.0 C
 To install, use composer:
 
 ```
-composer require league/oauth2-trademe
+composer require elliot-sawyer/oauth2-trademe
 ```
 
 ## Usage
